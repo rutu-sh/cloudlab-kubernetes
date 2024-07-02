@@ -65,11 +65,9 @@ copy-kube-config:
 		echo "Kubeconfig copied to ~/.kube/config"; \
 	fi
 
-
 setup-3n-k8s-cluster:
 	@echo "Setting up 3-node k8s cluster..."
 	$(MAKE) setup-master-node
 	$(MAKE) setup-worker-node-1
 	$(MAKE) setup-worker-node-2 
 	@echo "3-node k8s cluster setup complete!"
-
