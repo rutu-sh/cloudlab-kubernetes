@@ -1,6 +1,6 @@
 # cloudlab-kubernetes
 
-![created with https://socialify.git.ci/](./docs/assets/cloudlab-kubernetes.svg)
+![](./docs/assets/cloudlab_k8s.jpg)
 
 This repository contains the necessary code to setup a 3 Node Kubernetes Cluster on CloudLab. It uses the [rutu-sh/cloudlab-tools](https://github.com/rutu-sh/cloudlab-tools) repository to setup the cluster. 
 
