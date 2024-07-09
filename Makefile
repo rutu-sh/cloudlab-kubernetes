@@ -15,7 +15,6 @@ all:
 	
 include setup/cloudlab-tools/cloudlab_tools.mk
 
-
 display-node-names:
 	@echo "Master Node: ${MASTER_NODE_NAME}"
 	@echo "Worker Node 1: ${WORKER_NODE_1_NAME}"
@@ -58,12 +57,15 @@ copy-kube-config:
 	@echo "Copying kubeconfig..."
 	$(MAKE) cl-scp-from-host NODE=${MASTER_NODE} SCP_SRC=${KUBE_CONFIG_SRC} SCP_DEST=${KUBE_CONFIG_DEST} && \
 	echo "Kubeconfig copied to ${KUBE_CONFIG_DEST}"
-	echo "Overwrite ~/.kube/config with ${KUBE_CONFIG_DEST} to access the cluster with kubectl?(y/n)"
-	@read response && \
+	@echo "Overwrite ~/.kube/config with ${KUBE_CONFIG_DEST} to access the cluster with kubectl?" && \
+	read -t 5 -p "Continue? (y|yes|n|no): " response || true; \
 	if [ "$$response" = "y" ]; then \
 		cp ${KUBE_CONFIG_DEST} ~/.kube/config && \
 		echo "Kubeconfig copied to ~/.kube/config"; \
+	else \
+		echo "Kubeconfig not copied to ~/.kube/config"; \
 	fi
+
 
 setup-3n-k8s-cluster:
 	@echo "Setting up 3-node k8s cluster..."
