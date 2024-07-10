@@ -58,7 +58,7 @@ copy-kube-config:
 	$(MAKE) cl-scp-from-host NODE=${MASTER_NODE} SCP_SRC=${KUBE_CONFIG_SRC} SCP_DEST=${KUBE_CONFIG_DEST} && \
 	echo "Kubeconfig copied to ${KUBE_CONFIG_DEST}"
 	@echo "Overwrite ~/.kube/config with ${KUBE_CONFIG_DEST} to access the cluster with kubectl?" && \
-	read -t 5 -p "Continue? (y|yes|n|no): " response || true; \
+	read -t 30 -p "Continue? (y/n): " response || true; \
 	if [ "$$response" = "y" ]; then \
 		cp ${KUBE_CONFIG_DEST} ~/.kube/config && \
 		echo "Kubeconfig copied to ~/.kube/config"; \
@@ -73,3 +73,14 @@ setup-3n-k8s-cluster:
 	$(MAKE) setup-worker-node-1
 	$(MAKE) setup-worker-node-2 
 	@echo "3-node k8s cluster setup complete!"
+
+
+taint-control-plane-node:
+	@echo "Taint all control-plane nodes? (y/n)" && \
+	read -t 30 response || true; \
+	if [ "$$response" = "y" ]; then \
+		kubectl taint nodes --all node-role.kubernetes.io/control-plane- && \
+		echo "Control-plane nodes tainted"; \
+	else \
+		echo "Control-plane node not tainted"; \
+	fi
