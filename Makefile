@@ -1,6 +1,6 @@
 CL_DIR=${CURDIR}/.cloudlab
 TOOLS_SRC_DIR=${CURDIR}/setup/cloudlab-tools
-KUBE_CONFIG_SRC="~/.kube/config"
+KUBE_CONFIG_SRC="~/.kubeconfig"
 KUBE_CONFIG_DEST=${CL_DIR}/kubeconfig
 
 # Node Mappings 
@@ -41,7 +41,7 @@ setup-worker-node-1:
 	@echo "Setting up worker node 1..."
 	$(MAKE) cl-sync-code NODE=${WORKER_NODE_1} && \
 	$(MAKE) cl-run-cmd NODE=${WORKER_NODE_1} COMMAND="cd ${REMOTE_DIR}/cloudlab-kubernetes/setup/cloudlab-tools/tools/kubernetes && make setup-worker-node"
-	$(MAKE) cl-run-cmd NODE=${WORKER_NODE_1} COMMAND="sudo $(shell cat ${CL_DIR}/join-command) --cri-socket=unix:///var/run/cri-dockerd.sock --node-name worker1" && \
+	$(MAKE) cl-run-cmd NODE=${WORKER_NODE_1} COMMAND="sudo $(shell cat ${CL_DIR}/join-command) --cri-socket=unix:///run/containerd/containerd.sock --node-name worker1" && \
 	echo "Worker node 1 setup complete!"
 
 
@@ -49,7 +49,7 @@ setup-worker-node-2:
 	@echo "Setting up worker node 2..."
 	$(MAKE) cl-sync-code NODE=${WORKER_NODE_2} && \
 	$(MAKE) cl-run-cmd NODE=${WORKER_NODE_2} COMMAND="cd ${REMOTE_DIR}/cloudlab-kubernetes/setup/cloudlab-tools/tools/kubernetes && make setup-worker-node"
-	$(MAKE) cl-run-cmd NODE=${WORKER_NODE_2} COMMAND="sudo $(shell cat ${CL_DIR}/join-command) --cri-socket=unix:///var/run/cri-dockerd.sock --node-name worker2" 
+	$(MAKE) cl-run-cmd NODE=${WORKER_NODE_2} COMMAND="sudo $(shell cat ${CL_DIR}/join-command) --cri-socket=unix:///run/containerd/containerd.sock --node-name worker2" 
 	echo "Worker node 2 setup complete!"
 
 
